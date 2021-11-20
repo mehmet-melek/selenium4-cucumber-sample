@@ -13,12 +13,14 @@ public class LoginPageStepDefinitions {
 
     @Given("User is at the login page")
     public void user_is_at_the_login_page() {
-        loginPage.goToHomePage();
+        loginPage.goToHomePage()
+                .closeFirstPopup();
     }
 
     @When("User enters username as {string} and password as {string}")
     public void user_enters_username_as_and_password_as(String string, String string2) {
-        loginPage.goToDocPage();
+        loginPage.waitOnLoginIcon()
+                .loginSuccessfully();
     }
 
 

@@ -3,6 +3,7 @@ package qa.pages;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,6 +17,7 @@ public class PageBase {
 
     public PageBase(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver,this);
         driverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
@@ -30,6 +32,7 @@ public class PageBase {
 
     public void click(WebElement webElement) {
         waitUntilClickable(webElement);
+        waitUntilVisible(webElement);
         webElement.click();
     }
 

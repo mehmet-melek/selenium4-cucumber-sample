@@ -1,4 +1,4 @@
-package qa;
+package org.melek.selenium.test;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +10,7 @@ public class ChromeDriver {
 
     public static WebDriver getDriver() {
         if (driver == null) {
+            System.setProperty("webdriver.chrome.driver", "/Users/melek/Workspace/Utils/chromedriver/chromedriver");
             ChromeOptions options = new ChromeOptions();
             options.setBinary("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
             driver = new org.openqa.selenium.chrome.ChromeDriver(options);

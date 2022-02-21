@@ -1,4 +1,4 @@
-package qa;
+package org.melek.selenium.test;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;

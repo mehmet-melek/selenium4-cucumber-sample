@@ -1,5 +1,6 @@
-package qa.pages;
+package org.melek.selenium.test.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,6 +43,7 @@ public class PageBase {
         webElement.sendKeys(text);
     }
 
+
     public String getElementText(WebElement webElement) {
         return webElement.getText();
     }
@@ -60,6 +62,12 @@ public class PageBase {
         } catch (NoSuchElementException exception) {
             return true;
         }
+    }
+
+    public WebElement getShadowRootElement (WebElement element) {
+        WebElement webElement = (WebElement) ((JavascriptExecutor) driver)
+                .executeScript("return arguments[0].shadowRoot", element);
+        return webElement;
     }
 
 }

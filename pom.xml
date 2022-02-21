@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.melek</groupId>
+    <groupId>org.melek.selenium.test</groupId>
     <artifactId>selenium4-cucumber-sample</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -13,34 +13,41 @@
         <maven.compiler.target>11</maven.compiler.target>
         <env.code>LOCAL</env.code>
         <reportFileName>${project.artifactId}-${env.code}-${version}</reportFileName>
+        <selenium-java.version>4.0.0</selenium-java.version>
+        <selenium-chrome-driver.version>4.0.0</selenium-chrome-driver.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <cassandra-all.version>0.8.1</cassandra-all.version>
+        <cucumber-java.version>7.0.0-RC1</cucumber-java.version>
+        <cucumber-junit.version>7.0.0-RC1</cucumber-junit.version>
+        <extentreports-cucumber7-adapter.version>1.0.0</extentreports-cucumber7-adapter.version>
+        <extentreports.version>5.0.9</extentreports.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     </properties>
 
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.0.0</version>
+            <version>${selenium-java.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
+
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>4.0.0</version>
+            <version>${selenium-chrome-driver.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
+            <version>${commons-io.version}</version>
         </dependency>
 
-
         <dependency>
-            <groupId> org.apache.cassandra</groupId>
+            <groupId>org.apache.cassandra</groupId>
             <artifactId>cassandra-all</artifactId>
-            <version>0.8.1</version>
+            <version>${cassandra-all.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -51,34 +58,32 @@
                     <artifactId>log4j</artifactId>
                 </exclusion>
             </exclusions>
-
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>7.0.0-RC1</version>
+            <version>${cucumber-java.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>7.0.0-RC1</version>
+            <version>${cucumber-junit.version}</version>
         </dependency>
 
         <dependency>
             <groupId>tech.grasshopper</groupId>
             <artifactId>extentreports-cucumber7-adapter</artifactId>
-            <version>1.0.0</version>
+            <version>${extentreports-cucumber7-adapter.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
-            <version>5.0.9</version>
+            <version>${extentreports.version}</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -87,11 +92,13 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M5</version>
+                    <version>${maven-surefire-plugin.version}</version>
                     <configuration>
+                        <skipTests>false</skipTests>
+                        <testFailureIgnore>true</testFailureIgnore>
                         <systemPropertyVariables>
                             <!--Extent report configuration-->
-                            <report.url>${user.dir}/target/${reportFileName}/report.html</report.url>
+                            <report.url>http://hostname/reports/${reportFileName}/report.html</report.url>
                             <extent.reporter.spark.start>true</extent.reporter.spark.start>
                             <extent.reporter.json.start>true</extent.reporter.json.start>
                             <extent.reporter.spark.out>
@@ -102,9 +109,6 @@
                             </extent.reporter.json.out>
                             <extent.reporter.spark.config>src/test/resources/extent-config.xml
                             </extent.reporter.spark.config>
-                            <extent.reporter.spark.base64imagesrc>true</extent.reporter.spark.base64imagesrc>
-                            <screenshot.dir>target/test-report/${reportFileName}/media/</screenshot.dir>
-                            <screenshot.rel.path>../${reportFileName}/media/</screenshot.rel.path>
                             <systeminfo.Environment>${env.code}</systeminfo.Environment>
                             <systeminfo.OS_Name>${os.name}</systeminfo.OS_Name>
                             <systeminfo.OS_Version>${os.version}</systeminfo.OS_Version>
@@ -113,6 +117,13 @@
                             <systeminfo.Java_Version>${java.version}</systeminfo.Java_Version>
                         </systemPropertyVariables>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

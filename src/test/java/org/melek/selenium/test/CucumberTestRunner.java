@@ -1,10 +1,11 @@
-package qa;
+package org.melek.selenium.test;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import org.melek.selenium.test.configuration.RunnerConfiguration;
 
 
 @RunWith(Cucumber.class)
@@ -20,7 +21,8 @@ public class CucumberTestRunner {
     
     @BeforeClass
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", "/Users/melek/Workspace/Utils/chromedriver/chromedriver");
+        RunnerConfiguration.configureSUT();
+
     }
 
 
